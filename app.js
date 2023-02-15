@@ -6,10 +6,11 @@ const nunjucks = require('nunjucks');
 
 dotenv.config();
 
-const connect = require('./schemas');
+const connect = require('./models');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const commentsRouter = require('./routes/comments');
+const categoryRouter = require('./routes/category');
 
 const app = express();
 app.set('port', process.env.PORT);
@@ -28,6 +29,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/comments', commentsRouter);
+app.use('/category', categoryRouter);
 
 app.use((req, res, next) => {
   const error =  new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
@@ -45,3 +47,5 @@ app.use((err, req, res, next) => {
 app.listen(process.env.PORT, () => {
   console.log(process.env.PORT, '번 포트에서 대기 중');
 });
+
+console.log(process.env.TITLE);

@@ -65,6 +65,34 @@
       </thead>
       <tbody></tbody>
     </table>
+
+
+    <div>
+      <form id="category-form">
+        <fieldset>
+          <legend>카테고리 등록</legend>
+          <div><input id="categoryName" type="text" placeholder="이름"></div>
+          <button type="submit">등록</button>
+        </fieldset>
+      </form>
+    </div>
+    <table id="category-list">
+      <thead>
+      <tr>
+        <th>아이디</th>
+        <th>카테고리명</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for category in category %}
+      <tr>
+        <td>{{category.id}}</td>
+        <td>{{category.categoryName}}</td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/mongoose.js"></script>
   </body>

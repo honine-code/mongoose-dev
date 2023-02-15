@@ -93,6 +93,32 @@ async function getComment(id) {
     console.error(err);
   }
 }
+// 카테고리 로딩
+async function getCategory() {
+  try {
+    const res = await axios.get('/category');
+    const category = res.data;
+    const tbody = document.querySelector('#category-list tbody');
+    tbody.innerHTML = '';
+    category.map(function (category) {
+      const row = document.createElement('tr');
+      row.addEventListener('click', () => {
+        getComment(category._id);
+      });
+      // 로우 셀 추가
+      let td = document.createElement('td');
+      td.textContent = category._id;
+      row.appendChild(td);
+      td = document.createElement('td');
+      td.textContent = category.categoryName;
+      row.appendChild(td);
+      tbody.appendChild(row);
+    });
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 // 사용자 등록 시
 document.getElementById('user-form').addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -134,4 +160,23 @@ document.getElementById('comment-form').addEventListener('submit', async (e) => 
   }
   e.target.userid.value = '';
   e.target.comment.value = '';
+});
+
+// 카테고리 등록 시
+document.getElementById('category-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  console.log("test")
+  const categoryName = e.target.categoryName.value;
+  console.log(categoryName)
+  if (!categoryName) {
+    return alert('카테고리를 입력하세요');
+  }
+
+  try {
+    await axios.post('/category', { categoryName });
+    getCategory();
+  } catch (err) {
+    console.error(err);
+  }
+  e.target.categoryName.value = '';
 });
